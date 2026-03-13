@@ -4,63 +4,22 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ----------------------------------------------------------
-     Smooth scroll for nav links
-     ---------------------------------------------------------- */
+  /* Smooth scroll */
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
       const target = document.querySelector(link.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
     });
   });
 
-  /* ----------------------------------------------------------
-     Sticky nav — add shadow on scroll
-     ---------------------------------------------------------- */
+  /* Sticky nav shadow */
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 10) {
-      navbar.style.boxShadow = '0 1px 12px rgba(26,26,26,0.06)';
-    } else {
-      navbar.style.boxShadow = 'none';
-    }
+    navbar.style.boxShadow = window.scrollY > 10 ? '0 1px 12px rgba(26,26,26,0.06)' : 'none';
   });
 
-  /* ----------------------------------------------------------
-     Scroll-reveal animation for sections and project cards
-     ---------------------------------------------------------- */
-  const revealEls = document.querySelectorAll(
-    '.proj, .about-grid, .hero-title, .hero-right, .contact-grid, .stats'
-  );
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  revealEls.forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = `opacity 0.6s ease ${i * 0.05}s, transform 0.6s ease ${i * 0.05}s`;
-    observer.observe(el);
-  });
-
-  document.addEventListener('animationend', () => {}, false);
-
-  // Apply revealed class via JS (cleaner than adding CSS class in HTML)
-  document.querySelectorAll('.revealed').forEach(el => {
-    el.style.opacity = '1';
-    el.style.transform = 'translateY(0)';
-  });
-
-  // Patch: override IntersectionObserver callback to apply styles directly
+  /* Scroll-reveal */
+  const revealEls = document.querySelectorAll('.proj, .about-grid, .hero-title, .hero-right, .contact-grid, .stats');
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -69,56 +28,86 @@ document.addEventListener('DOMContentLoaded', () => {
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
-
-  revealEls.forEach(el => revealObserver.observe(el));
+  }, { threshold: 0.08 });
+  revealEls.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(22px)';
+    el.style.transition = `opacity 0.6s ease ${i * 0.05}s, transform 0.6s ease ${i * 0.05}s`;
+    revealObserver.observe(el);
+  });
 
   /* ----------------------------------------------------------
-     Contact form — basic validation + success message
+     Lightbox
      ---------------------------------------------------------- */
-  const form = document.getElementById('contactForm');
-  const successMsg = document.getElementById('formSuccess');
+  const lightbox  = document.getElementById('lightbox');
+  const backdrop  = document.getElementById('lbBackdrop');
+  const lbImg     = document.getElementById('lbImg');
+  const lbCounter = document.getElementById('lbCounter');
+  const lbClose   = document.getElementById('lbClose');
+  const lbPrev    = document.getElementById('lbPrev');
+  const lbNext    = document.getElementById('lbNext');
 
+  let gallery = [];
+  let idx = 0;
+
+  function open(g, i) {
+    gallery = g; idx = i;
+    show(idx);
+    lightbox.classList.add('active');
+    backdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lightbox.classList.remove('active');
+    backdrop.classList.remove('active');
+    document.body.style.overflow = '';
+    lbImg.classList.remove('loaded');
+  }
+
+  function show(i) {
+    lbImg.classList.remove('loaded');
+    lbImg.src = gallery[i];
+    lbImg.onload = () => lbImg.classList.add('loaded');
+    lbCounter.textContent = `${i + 1} / ${gallery.length}`;
+    lbPrev.style.opacity = i === 0 ? '0.3' : '1';
+    lbNext.style.opacity = i === gallery.length - 1 ? '0.3' : '1';
+  }
+
+  function prev() { if (idx > 0) show(--idx); }
+  function next() { if (idx < gallery.length - 1) show(++idx); }
+
+  document.querySelectorAll('.proj[data-gallery]').forEach(proj => {
+    proj.addEventListener('click', () => open(JSON.parse(proj.dataset.gallery), 0));
+  });
+
+  lbClose.addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  lbPrev.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+  lbNext.addEventListener('click', (e) => { e.stopPropagation(); next(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape')     close();
+    if (e.key === 'ArrowLeft')  prev();
+    if (e.key === 'ArrowRight') next();
+  });
+
+  /* Contact form validation */
+  const form = document.getElementById('contactForm');
   if (form) {
     form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const name    = form.querySelector('#name').value.trim();
-      const email   = form.querySelector('#email').value.trim();
-      const message = form.querySelector('#message').value.trim();
-
-      if (!name || !email || !message) {
-        // Simple shake on empty required fields
+      const n = form.querySelector('#name').value.trim();
+      const em = form.querySelector('#email').value.trim();
+      const m = form.querySelector('#message').value.trim();
+      if (!n || !em || !m) {
+        e.preventDefault();
         [form.querySelector('#name'), form.querySelector('#email'), form.querySelector('#message')]
-          .forEach(field => {
-            if (!field.value.trim()) {
-              field.style.borderBottomColor = '#F07A5A';
-            }
-          });
-        return;
+          .forEach(f => { if (!f.value.trim()) f.style.borderBottomColor = '#F07A5A'; });
       }
-
-      // In production, replace this with a real form submission (e.g. Formspree, EmailJS, etc.)
-      // Example with Formspree:
-      // fetch('https://formspree.io/f/YOUR_FORM_ID', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ name, email, message })
-      // });
-
-      form.reset();
-      successMsg.classList.add('visible');
-
-      setTimeout(() => {
-        successMsg.classList.remove('visible');
-      }, 5000);
     });
-
-    // Reset field border color on input
-    form.querySelectorAll('input, textarea').forEach(field => {
-      field.addEventListener('input', () => {
-        field.style.borderBottomColor = '';
-      });
+    form.querySelectorAll('input, textarea').forEach(f => {
+      f.addEventListener('input', () => { f.style.borderBottomColor = ''; });
     });
   }
 

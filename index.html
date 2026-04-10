@@ -6,7 +6,7 @@
   <title>DreamBigStudio — Architecture & Interior Design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&family=Nunito+Sans:ital,wght@0,800;1,800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -16,18 +16,43 @@
     <a href="#" class="logo-link">
       <img class="logo-img" src="assets/logo.png" alt="DreamBigStudio" />
     </a>
-    <div class="nav-links">
-      <a href="#portfolio">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-right" id="navRight">
+      <div class="nav-links">
+        <a href="#portfolio">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-social">
+        <a href="https://www.instagram.com/dbs.arhitectura/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </a>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.79a4.83 4.83 0 0 1-1.01-.1z"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <h1 class="hero-title">We design<br>spaces that<br><em>move</em> people.</h1>
+    <div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <h1 class="hero-title"><em>Dream Big.</em><br>We design it.</h1>
     <div class="hero-right">
-      <p class="hero-sub">DreamBigStudio is an architecture and interior design practice based in Timișoara, Romania, dedicated to creating spaces where form, light, and purpose meet.</p>
       <a class="hero-cta" href="#portfolio">View our work →</a>
     </div>
   </section>
@@ -38,19 +63,20 @@
     <h2 class="section-title">Projects</h2>
     <div class="portfolio-grid">
 
-      <!-- House 1 Architecture — 8 real photos, N_5 first -->
-      <div class="proj" data-gallery='[
-        "assets/h1_5.jpg",
-        "assets/h1_1.jpg",
-        "assets/h1_2.jpg",
-        "assets/h1_3.jpg",
-        "assets/h1_4.jpg",
-        "assets/h1_6.jpg",
-        "assets/h1_7.jpg",
-        "assets/h1_8.jpg"
+      <!-- GALLERY:house1-architecture -->
+      <div class="proj" data-description="Write your description for House 1 — Architecture here." data-gallery='[
+        "assets/house1-architecture/house1_1.jpg",
+        "assets/house1-architecture/house1_2.jpg",
+        "assets/house1-architecture/house1_3.jpg",
+        "assets/house1-architecture/house1_4.jpg",
+        "assets/house1-architecture/house1_5.jpg",
+        "assets/house1-architecture/house1_6.jpg",
+        "assets/house1-architecture/house1_7.jpg",
+        "assets/house1-architecture/house1_10.jpg",
+        "assets/house1-architecture/house1_11.png"
       ]'>
         <div class="proj-thumb">
-          <img src="assets/h1_5.jpg" alt="House 1 Architecture" loading="lazy" />
+          <img src="assets/house1-architecture/house1_1.jpg" alt="House 1 Architecture" loading="lazy" />
           <div class="proj-overlay"><span>View project →</span></div>
         </div>
         <div class="proj-info">
@@ -59,10 +85,14 @@
         </div>
       </div>
 
-      <!-- House 1 Interior — placeholder -->
-      <div class="proj proj--placeholder">
-        <div class="proj-thumb proj-thumb--ph">
-          <svg width="80" height="80" viewBox="0 0 80 80"><rect x="8" y="20" width="64" height="48" fill="#D4C4B0"/><rect x="14" y="28" width="20" height="16" fill="#F07A5A" opacity="0.6"/><rect x="44" y="28" width="22" height="32" fill="#C0A880"/><line x1="8" y1="44" x2="72" y2="44" stroke="#B09878" stroke-width="1"/></svg>
+      <!-- GALLERY:house1-interior -->
+      <div class="proj" data-description="Write your description here." data-gallery='[
+        "assets/house1-interior/house1_8.jpg",
+        "assets/house1-interior/house1_9.jpg"
+      ]'>
+        <div class="proj-thumb">
+          <img src="assets/house1-interior/house1_8.jpg" alt="House 1 — Architecture" loading="lazy" />
+          <div class="proj-overlay"><span>View project →</span></div>
         </div>
         <div class="proj-info">
           <div class="proj-name">House 1 — Interior Design</div>
@@ -70,19 +100,19 @@
         </div>
       </div>
 
-      <!-- House 2 Architecture — 8 real photos -->
-      <div class="proj" data-gallery='[
-        "assets/h2_8.jpg",
-        "assets/h2_1.jpg",
-        "assets/h2_2.jpg",
-        "assets/h2_3.jpg",
-        "assets/h2_4.jpg",
-        "assets/h2_5.jpg",
-        "assets/h2_6.jpg",
-        "assets/h2_7.jpg"
+      <!-- GALLERY:house2-architecture -->
+      <div class="proj" data-description="Write your description for House 2 — Architecture here." data-gallery='[
+        "assets/house2-architecture/h2_1.jpg",
+        "assets/house2-architecture/h2_2.jpg",
+        "assets/house2-architecture/h2_3.jpg",
+        "assets/house2-architecture/h2_4.jpg",
+        "assets/house2-architecture/h2_5.jpg",
+        "assets/house2-architecture/h2_6.jpg",
+        "assets/house2-architecture/h2_7.jpg",
+        "assets/house2-architecture/h2_8.jpg"
       ]'>
         <div class="proj-thumb">
-          <img src="assets/h2_8.jpg" alt="House 2 Architecture" loading="lazy" />
+          <img src="assets/house2-architecture/h2_1.jpg" alt="House 2 Architecture" loading="lazy" />
           <div class="proj-overlay"><span>View project →</span></div>
         </div>
         <div class="proj-info">
@@ -91,24 +121,19 @@
         </div>
       </div>
 
-      <!-- House 2 Interior — 13 real photos -->
-      <div class="proj" data-gallery='[
-        "assets/h2i_8.jpg",
-        "assets/h2i_1.jpg",
-        "assets/h2i_2.jpg",
-        "assets/h2i_3.jpg",
-        "assets/h2i_4.jpg",
-        "assets/h2i_5.jpg",
-        "assets/h2i_6.jpg",
-        "assets/h2i_7.jpg",
-        "assets/h2i_9.jpg",
-        "assets/h2i_10.jpg",
-        "assets/h2i_11.jpg",
-        "assets/h2i_12.jpg",
-        "assets/h2i_13.jpg"
+      <!-- GALLERY:house2-interior -->
+      <div class="proj" data-description="Write your description for House 2 — Interior Design here." data-gallery='[
+        "assets/house2-interior/h2i_6.jpg",
+        "assets/house2-interior/h2i_7.jpg",
+        "assets/house2-interior/h2i_8.jpg",
+        "assets/house2-interior/h2i_9.jpg",
+        "assets/house2-interior/h2i_10.jpg",
+        "assets/house2-interior/h2i_11.jpg",
+        "assets/house2-interior/h2i_12.jpg",
+        "assets/house2-interior/h2i_13.jpg"
       ]'>
         <div class="proj-thumb">
-          <img src="assets/h2i_8.jpg" alt="House 2 Interior Design" loading="lazy" />
+          <img src="assets/house2-interior/h2i_6.jpg" alt="House 2 Interior Design" loading="lazy" />
           <div class="proj-overlay"><span>View project →</span></div>
         </div>
         <div class="proj-info">
@@ -117,10 +142,29 @@
         </div>
       </div>
 
+      <!-- GALLERY:house2-basement -->
+      <div class="proj" data-description="Write your description here." data-gallery='[
+        "assets/house2-basement/h2i_1.jpg",
+        "assets/house2-basement/h2i_2.jpg",
+        "assets/house2-basement/h2i_3.jpg",
+        "assets/house2-basement/h2i_4.jpg",
+        "assets/house2-basement/h2i_5.jpg"
+      ]'>
+        <div class="proj-thumb">
+          <img src="assets/house2-basement/h2i_1.jpg" alt="House 2 — Basement Design" loading="lazy" />
+          <div class="proj-overlay"><span>View project →</span></div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-name">House 2 — Basement Design</div>
+          <div class="proj-type">Interior Design · Arad</div>
+        </div>
+      </div>
+
       <!-- 2-Bed Apartment — placeholder -->
       <div class="proj proj--placeholder">
-        <div class="proj-thumb proj-thumb--ph" style="background:#E6E2DC;">
-          <svg width="80" height="80" viewBox="0 0 80 80"><rect x="10" y="22" width="60" height="46" fill="#CCC0B0"/><rect x="18" y="30" width="16" height="12" fill="#F07A5A" opacity="0.55"/><rect x="38" y="30" width="24" height="20" fill="#B8A890"/></svg>
+        <div class="proj-thumb">
+          <img src="assets/2bedroom-apt/#" alt="2-Bedroom Apartment" loading="lazy" />
+          <div class="proj-overlay"><span>View project →</span></div>
         </div>
         <div class="proj-info">
           <div class="proj-name">2-Bedroom Apartment</div>
@@ -130,8 +174,9 @@
 
       <!-- 1-Bed Apartment — placeholder -->
       <div class="proj proj--placeholder">
-        <div class="proj-thumb proj-thumb--ph" style="background:#E0DDD8;">
-          <svg width="80" height="80" viewBox="0 0 80 80"><rect x="10" y="24" width="60" height="44" fill="#C4BAA8"/><rect x="16" y="32" width="14" height="10" fill="#F07A5A" opacity="0.5"/><rect x="36" y="32" width="28" height="18" fill="#B0A090"/></svg>
+        <div class="proj-thumb">
+          <img src="assets/1bedroom-apt/#" alt="1-Bedroom Apartment" loading="lazy" />
+          <div class="proj-overlay"><span>View project →</span></div>
         </div>
         <div class="proj-info">
           <div class="proj-name">1-Bedroom Apartment</div>
@@ -159,11 +204,6 @@
             <div class="team-name">Laura</div>
             <div class="team-role">Architect · 5 years experience</div>
           </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><div class="stat-num">6</div><div class="stat-label">Projects</div></div>
-          <div class="stat"><div class="stat-num">5</div><div class="stat-label">Years active</div></div>
-          <div class="stat"><div class="stat-num">2</div><div class="stat-label">Cities</div></div>
         </div>
       </div>
     </div>
@@ -204,17 +244,25 @@
     <div class="footer-copy">Architecture & Interior Design · Timișoara, Romania</div>
   </footer>
 
-  <!-- LIGHTBOX -->
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Project gallery">
-    <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
-    <button class="lb-prev" id="lbPrev" aria-label="Previous">&#8592;</button>
-    <button class="lb-next" id="lbNext" aria-label="Next">&#8594;</button>
-    <div class="lb-img-wrap">
-      <img class="lb-img" id="lbImg" src="" alt="Project image" />
+  <!-- PROJECT PANEL -->
+  <div id="projectPanel" class="panel" role="dialog" aria-modal="true" aria-label="Project details">
+    <button class="panel-close" id="panelClose" aria-label="Close">✕</button>
+    <div class="panel-box">
+      <div class="panel-gallery">
+        <div class="panel-img-wrap">
+          <img class="panel-img" id="panelImg" src="" alt="Project image" />
+        </div>
+        <button class="panel-prev" id="panelPrev" aria-label="Previous">&#8592;</button>
+        <button class="panel-next" id="panelNext" aria-label="Next">&#8594;</button>
+        <div class="panel-counter" id="panelCounter"></div>
+      </div>
+      <div class="panel-info">
+        <div class="panel-type" id="panelType"></div>
+        <h2 class="panel-title" id="panelTitle"></h2>
+        <p class="panel-desc" id="panelDesc"></p>
+      </div>
     </div>
-    <div class="lb-counter" id="lbCounter"></div>
   </div>
-  <div class="lb-backdrop" id="lbBackdrop"></div>
 
   <script src="js/main.js"></script>
 </body>
